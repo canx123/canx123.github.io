@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Cankur Web Tarayıcı</title>
+  <style>
+    body { font-family: Arial; text-align: center; background: #f0f0f0; margin: 0; padding: 50px; }
+    input, button { padding: 10px; margin: 5px; font-size: 16px; }
+    #login, #tarayici, #admin { display: none; }
+    #login.active, #tarayici.active, #admin.active { display: block; }
+  </style>
+</head>
+<body>
+
+<div id="login" class="active">
+  <h2>Giriş Yap</h2>
+  <input type="text" id="kullanici" placeholder="Kullanıcı Adı"><br>
+  <input type="password" id="sifre" placeholder="Şifre"><br>
+  <button onclick="girisYap()">Giriş</button>
+  <p id="hata" style="color:red;"></p>
+</div>
+
+<div id="tarayici">
+  <h2>Hoş geldin <span id="kadi"></span></h2>
+  <input type="text" id="site" placeholder="Site adı (örnek: youtube, google)"><br>
+  <button onclick="git()">Git</button>
+  <br><br>
+  <button onclick="cikis()">Çıkış</button>
+</div>
+
+<div id="admin">
+  <h2>🛠 Admin Paneli</h2>
+  <p>Merhaba admin! Buradan yönetim yapabilirsin.</p>
+  <button onclick="cikis()">Çıkış Yap</button>
+</div>
+
+<script>
+const kullanicilar = {
+  "admin": "admin123",
+  "cankur": "1234"
+};
+
+function girisYap() {
+  const ad = document.getElementById("kullanici").value;
+  const sif = document.getElementById("sifre").value;
+  if (kullanicilar[ad] === sif) {
+    if (ad === "admin") {
+      document.getElementById("login").classList.remove("active");
+      document.getElementById("admin").classList.add("active");
+    } else {
+      document.getElementById("login").classList.remove("active");
+      document.getElementById("tarayici").classList.add("active");
+      document.getElementById("kadi").textContent = ad;
+    }
+  } else {
+    document.getElementById("hata").textContent = "Hatalı giriş!";
+  }
+}
+
+function git() {
+  let site = document.getElementById("site").value.toLowerCase().trim();
+  const siteler = {
+    "youtube": "https://www.youtube.com",
+    "google": "https://www.google.com",
+    "facebook": "https://www.facebook.com",
+    "instagram": "https://www.instagram.com"
+  };
+  let url = siteler[site] || `https://www.${site}.com`;
+  window.open(url, "_blank");
+}
+
+function cikis() {
+  location.reload();
+}
+</script>
+
+</body>
+</html>
